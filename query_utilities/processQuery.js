@@ -38,7 +38,7 @@ const getQueryVector = (query) => {
     });
     */
 
-    // Write query word map
+    // Save to query_TF.json
     fs.writeFile(
         "./doc_files/query_TF.json",
         JSON.stringify(query_weight, null, 2),
