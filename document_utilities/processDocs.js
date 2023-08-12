@@ -26,21 +26,12 @@ var processingDoc = scannedDocs.map(({ doc_id, content, title }) => {
     };
 });
 
-/*
-// Stem the words
-processingDoc = require(path.join(
-    __dirname,
-    "../stopWordRemover"
-)).getProcessedCorpus(processingDoc.index);
-// processingDoc = stemmeDoc(processingDoc.content);
-*/
-
 const stopWordRemover = require(path.join(__dirname, "../stopWordRemover"));
 
-processingDoc = processingDoc.map(doc => {
+processingDoc = processingDoc.map((doc) => {
     return {
         ...doc,
-        index: stopWordRemover.getProcessedCorpus(doc.index)
+        index: stopWordRemover.getProcessedCorpus(doc.index),
     };
 });
 
@@ -54,7 +45,7 @@ fs.writeFile(
             console.error(err);
             return;
         }
-        console.log("Display corpus generated");
+    console.log("Display snippet created and saved as docSnippet.json");
     }
 );
 
@@ -68,6 +59,6 @@ fs.writeFile(
             console.error(err);
             return;
         }
-        console.log("Functional corpus generated");
+console.log("Processing document created and saved as processingDoc.json");
     }
 );
