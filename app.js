@@ -21,7 +21,6 @@ app.get("/", (req, res) => {
     res.render("index", { title: "Stemmer" });
 });
 
-//---------------------Stemmer Demo--------------------------------------
 app.post("/stemmer", urlencodedParser, (req, res) => {
     const query = req.body.query;
 
@@ -35,22 +34,23 @@ app.post("/stemmer", urlencodedParser, (req, res) => {
     });
 });
 
-//---------------------Read documents-------------------------------------
+//---------------------Read from file test-------------------------------------
 
 app.get("/read", (req, res) => {
     res.render("read", { title: "Read" });
+    // const processor = require("./document_utilities/document_reader");
+    // const word_result = processor.countWords();
+    // res.render("read", {
+    //     title: "Read",
+    //     word_count: word_result,
+    // });
 
     const corpusReader = require("./document_utilities/doc_reader");
     const word_result = corpusReader.scanDocs;
     const corpusDivider = require("./document_utilities/processDocs");
-});
 
-//---------------------Calculate term weight-------------------------------------
-
-app.get("/weight", (req, res) => {
-    res.render("read", { title: "Read" });
-    console.log("loading");
-    const weighting = require("./document_utilities/weightTerms");
+    // const corpusProcessor = require("./document_utilities/story_stemmer");
+    // const corpus_result = corpusProcessor.processCorpus;
 });
 
 //------------------Admin Panel Controls----------------------------------------
