@@ -155,7 +155,7 @@ const PhoneticDictionary = {
     ዥ: "ዥ",
     ዦ: "ዥኦ",
     የ: "ይኧ",
-    ዩ: "ይኡ",
+    ዮ: "ይኡ",
     ዪ: "ይኢ",
     ያ: "ይኣ",
     ዬ: "ይኤ",
@@ -238,7 +238,7 @@ const PhoneticDictionary = {
     ቬ: "ቭኤ",
     ቭ: "ቭ",
     ቮ: "ቭኦ",
-
+    
     // Additionals
     ቋ: "ቋ",
     ሯ: "ሯ",
@@ -396,7 +396,7 @@ const Prefix = [
     "ዕን",
     "ብኧ",
     "ዐል",
-    "ይ", //gudayu
+    "ይ",
 ];
 
 const non_stemmedWords = [
