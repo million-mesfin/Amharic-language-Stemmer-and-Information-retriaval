@@ -35,6 +35,15 @@ processingDoc = require(path.join(
 // processingDoc = stemmeDoc(processingDoc.content);
 */
 
+const stopWordRemover = require(path.join(__dirname, "../stopWordRemover"));
+
+processingDoc = processingDoc.map(doc => {
+    return {
+        ...doc,
+        index: stopWordRemover.getProcessedCorpus(doc.index)
+    };
+});
+
 // Write Display Corpus
 fs.writeFile(
     path.join(__dirname, "../doc_files/docSnippet.json"),
