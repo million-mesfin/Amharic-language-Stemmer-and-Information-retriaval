@@ -9,7 +9,7 @@ const allTerms = processingDoc.flatMap((doc) => doc.index);
 var uniqueTerms = new Set(allTerms);
 
 // TF normalized by length
-var termFrequency = {};
+var termFrequency = {};     // Hold terms with IDF and TFIDF
 uniqueTerms.forEach((term) => {
     //create term property
     termFrequency[term] = {};

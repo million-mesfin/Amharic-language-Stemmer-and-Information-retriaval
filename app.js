@@ -53,6 +53,14 @@ app.get("/weight", (req, res) => {
     const weighting = require("./document_utilities/weightTerms");
 });
 
+//---------------------Query processing test-------------------------------------
+
+app.get("/query", (req, res) => {
+    res.render("read", { title: "Read" });
+    const weighting = require("./query_utilities/processQuery");
+    weighting.queryVector("ኢትዮጵያ እና ፓኪስታን");
+});
+
 //------------------Admin Panel Controls----------------------------------------
 
 app.get("/admin", (req, res) => {
