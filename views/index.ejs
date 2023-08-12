@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stemmer</title>
+    <link rel="stylesheet" href="/style.css">
+
+</head>
+
+<body>
+    <div class="container">
+        <p class="header">Amharic Stemmer</p>
+        <form action="/stemmer" method="post">
+            <input type="text" name="query" id="query" placeholder="Enter your search query..." required>
+            <button type="submit">search</button>
+
+        </form>
+        <% if (typeof stems !=='undefined' ) { %>
+
+            <p class="query"><i>Query</i>:
+                <%= query %>
+            </p>
+            <hr>
+            <p class="stem"><i>Stem</i>:
+                <% stems.forEach(stem=> { %>
+
+                    <%= stem %>
+
+                        <% }) %>
+            </p>
+            <% } %>
+    </div>
+</body>
+
+</html>

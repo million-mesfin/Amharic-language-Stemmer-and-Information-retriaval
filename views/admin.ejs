@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/admin_style.css">
+</head>
+
+<body>
+    <h1>Administration Panel</h1>
+    <div class="data_processing">
+        <form action="/admin-form" method="post">
+            <input type="checkbox" name="deleteStemmedDocs" id="deleteStemmedDocs" value="1">
+            <label for="deleteStemmedDocs">Delete Stemmed Documents</label>
+            <br>
+            <input type="checkbox" name="deleteScannedDocs" id="deleteScannedDocs" value="2">
+            <label for="deleteScannedDocs">Delete Scanned Documents</label>
+            <br>
+            <input type="checkbox" name="processDocs" id="processDocs" value="3">
+            <label for="processDocs">Process Documents</label>
+            <br>
+            <input type="submit" value="submit">
+        </form>
+    </div>
+</body>
+
+</html>

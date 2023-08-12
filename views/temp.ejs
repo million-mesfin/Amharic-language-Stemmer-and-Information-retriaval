@@ -1,0 +1,11 @@
+// Define the path of the json file
+const path = './data.json';
+
+// Delete the file using fs.unlink
+fs.unlink(path, (err) => {
+  if (err) {
+    console.error(err);
+    return;
+  }
+  console.log('File deleted successfully');
+});
