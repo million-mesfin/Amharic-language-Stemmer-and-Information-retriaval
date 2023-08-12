@@ -11,6 +11,23 @@ const getQueryVector = (query) => {
     // TF normalized by length
     var len = query.length;
     var query_weight = {}; // Holds query terms with their weights
+    for (let term of unique_queryTerms) {
+        let count = 0;
+        for (let word of unique_queryTerms) {
+            if (word === term) {
+                count++;
+            }
+        }
+        query_weight[term] = {};
+        query_weight[term]["q"] = count / len;
+    }
+    /*
+    for (const term of unique_queryTerms) {
+        const count = unique_queryTerms.filter(word => word === term).length;
+        query_weight[term] = {
+            q: count / unique_queryTerms.length
+        };
+    }
     unique_queryTerms.forEach((term) => {
         query_weight[term] = {};
         query_weight[term]["q"] =
@@ -19,7 +36,7 @@ const getQueryVector = (query) => {
                 return count;
             }, 0) / len;
     });
-
+    */
 
     // Write query word map
     fs.writeFile(
