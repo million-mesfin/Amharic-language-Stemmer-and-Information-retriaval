@@ -4,7 +4,7 @@ body {
     margin: 20px;
     max-width: 600px;
     margin: 0 auto;
-    background-color: rgb(1, 1, 63);
+    background-color: rgb(0, 0, 0);
 }
 
 .header{
@@ -67,7 +67,7 @@ button:hover {
     left: 30%;
     height: 300px;
     padding: 40px;
-    background-color: #7272723b;
+    background-color: #9797973b;
     border-radius: 16px;
-    box-shadow: 2px 2px 12px 8px rgba(160, 160, 160, 0.274);
+    box-shadow: 2px 2px 12px 8px rgba(190, 190, 190, 0.274);
 }

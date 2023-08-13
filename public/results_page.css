@@ -70,7 +70,7 @@ form button img {
     height: fit-content;
     /* border-radius: 20px; */
     margin-top: 120px;
-    padding: 50px 20px;
+    padding: 30px 40px 30px 20px;
     /* border: 1px solid rgb(188, 188, 188); */
     /* overflow: auto; */
 }
@@ -80,11 +80,12 @@ form button img {
     font-size: 0.75em;
     width: 100%;
     text-align: right;
+    margin-bottom: 30px;
     text-decoration: underline;
 }
 
 .docPreview {
-    width: 70%;
+    width: 80%;
     margin: 10px auto 15px 30px;
 }
 
@@ -109,4 +110,16 @@ form button img {
     line-height: 2em;
     cursor: default;
     font-family: "Courier New", Courier, monospace;
+}
+
+.docPreview hr{
+    border: 0.5px solid rgba(238, 238, 238, 0.918);
+}
+
+.noDoc{
+    color: rgb(122, 122, 122);
+    /* border: 1px solid red;
+    height: 300px; */
+    text-align: center;
+    margin-top: 10%;
 }
