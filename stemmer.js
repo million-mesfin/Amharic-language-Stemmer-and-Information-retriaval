@@ -1,3 +1,5 @@
+const fs = require("fs");
+
 var vowels = ["ኧ", "ኡ", "ኢ", "ኣ", "ኤ", "ኦ"];
 const PhoneticDictionary = {
     ሀ: "ህኧ",
@@ -430,6 +432,20 @@ const non_stemmedWords = [
     "ድሬደዋ",
     "ሀረር",
 ];
+
+const checkTermInStemTable = (word) => {
+    // Read the JSON file
+    let tableData = fs.readFileSync("./support docs/stemTable.json");
+    let stemTable = JSON.parse(tableData);
+
+    // Check if the word exists as a key in the stemTable
+    if (stemTable.hasOwnProperty(word)) {
+        // If the word exists, return the corresponding value
+        return stemTable[word];
+    }
+    return null;
+};
+
 const getPhoneticRepresentation = (word) => {
     phoneticWord = "";
     for (var i = 0; i < word.length; i++) {
@@ -454,6 +470,9 @@ const getAmharicWord = (word) => {
     return finalWord;
 };
 exports.stem = function (word) {
+    if (checkTermInStemTable(word) != null) {
+        return checkTermInStemTable(word);
+    }
     stemmedWord = getPhoneticRepresentation(word);
     if (non_stemmedWords.includes(word)) {
         return word;
