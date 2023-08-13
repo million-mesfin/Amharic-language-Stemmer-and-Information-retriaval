@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 
 const fs = require("fs");
 const path = require("path");
+const readline = require("readline");
 
 const app = express();
 
@@ -43,6 +44,32 @@ app.get("/read", (req, res) => {
     const corpusReader = require("./document_utilities/doc_reader");
     const word_result = corpusReader.scanDocs;
     const corpusDivider = require("./document_utilities/processDocs");
+
+    // let dictionary = {};
+
+    // // create a read stream from the text file
+    // const readStream = readline.createInterface({
+    //     input: fs.createReadStream("./support docs/amhData.txt"),
+    //     output: process.stdout,
+    //     terminal: false,
+    // });
+
+    // // listen for 'line' event
+    // readStream.on("line", function (line) {
+    //     let words = line.split(/\s+/);
+    //     let key = words[1].replace(/"/g, ""); // remove double quotes
+    //     let value = words[0].replace(/"/g, ""); // remove double quotes
+    //     dictionary[key] = value;
+    // });
+
+    // //listening to close event
+    // readStream.on("close", function () {
+    //     let stemTermsData = JSON.stringify(dictionary, null, 4);
+    //     fs.writeFile("./support docs/stemTable.json", stemTermsData, (err) => {
+    //         if (err) throw err;
+    //         console.log("Data written to stemTable.json");
+    //     });
+    // });
 });
 
 //---------------------Calculate term weight test-------------------------------------
@@ -61,7 +88,7 @@ app.get("/query", (req, res) => {
     weighting.queryVector("ኢትዮጵያ እና ፓኪስታን");
 });
 
-//---------------------Find matching documents-------------------------------------
+//---------------------Find matching documents (test code)-------------------------------------
 
 app.get("/find", (req, res) => {
     res.render("read", { title: "Read" });
