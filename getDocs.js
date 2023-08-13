@@ -7,86 +7,109 @@ displayCorpus = JSON.parse(
 const GetMatch = () => {
     query = JSON.parse(fs.readFileSync("./doc_files/query_TF.json", "utf-8"));
 
-    // Read document TFIDF word map
-    wordMapTFIDF = JSON.parse(
+    // Read document TFIDF term map
+    term_TFIDF = JSON.parse(
         fs.readFileSync("./doc_files/term_TFIDF.json", "utf-8")
     );
 
-    // Read document word map
-    wordMap = JSON.parse(
+    term_list = JSON.parse(
         fs.readFileSync("./doc_files/term_TFIDF.json", "utf-8")
     );
 
-    // Get list of the words in our word map
-    wordList = Object.keys(wordMap);
+    // Hold the list of all words
+    wordList = Object.keys(term_list);
 
-    // Generate TFIDF for all the documents and query
-    TFIDFMap = {};
-    for (let queryWord in query) {
-        TFIDFMap[queryWord] = {};
-        TFIDFMap[queryWord] = wordMapTFIDF[queryWord];
-        // If the word is in our word map then calculate TFIDF of Query, else assign 0
-        if (TFIDFMap[queryWord]) {
-            TFIDFMap[queryWord]["q"] =
-                query[queryWord]["q"] * wordMap[queryWord]["IDF"];
-        } else TFIDFMap[queryWord] = { q: 0 };
+    // calculate document TFIDF
+    TFIDF_ = {};
+    for (let queryTerm in query) {
+        TFIDF_[queryTerm] = {};
+        TFIDF_[queryTerm] = term_TFIDF[queryTerm];
+
+        // If the term is in our term map then calculate TFIDF of Query, else assign 0
+        // if (TFIDF_[queryTerm]) {
+        //     TFIDF_[queryTerm]["q"] =
+        //         query[queryTerm]["q"] * term_list[queryTerm]["IDF"];
+        // } else TFIDF_[queryTerm] = { q: 0 };
+
+        /**
+         * checks if TFIDF_[queryTerm] exists. If it does, it updates the q property of TFIDF_[queryTerm] with the product of query[queryTerm]["q"] and term_list[queryTerm]["IDF"]. If TFIDF_[queryTerm] does not exist, it sets TFIDF_[queryTerm] to { q: 0 }.
+         */
+        TFIDF_[queryTerm] = TFIDF_[queryTerm]
+            ? {
+                  ...TFIDF_[queryTerm],
+                  q: query[queryTerm]["q"] * term_list[queryTerm]["IDF"],
+              }
+            : { q: 0 };
     }
 
     // Get count of total documents
-    var sampleWord = Object.keys(wordMap)[0];
-    var documentCount = Object.keys(wordMap[sampleWord]).length - 2;
+    var testWord = Object.keys(term_list)[0];
+    var documentCount = Object.keys(term_list[testWord]).length - 2;
 
-    // Get Dot Product
-    var dotProductMap = {};
-    for (i = 0; i < documentCount; i++) {
-        count = 0;
-        for (word in TFIDFMap) {
-            count += (TFIDFMap[word][i] || 0) * TFIDFMap[word]["q"];
-        }
-        dotProductMap[i] = count;
-    }
+    // calculate Dot Product
+    // var dotProduct = {};
+    // for (i = 0; i < documentCount; i++) {
+    //     count = 0;
+    //     for (term in TFIDF_) {
+    //         count += (TFIDF_[term][i] || 0) * TFIDF_[term]["q"];
+    //     }
+    //     dotProduct[i] = count;
+    // }
 
-    // Get Magnitude
-    var magnitudeMap = {};
-    for (i = 0; i < documentCount; i++) {
-        magnitude = 0;
-        for (word in TFIDFMap) {
-            magnitude += Math.pow(TFIDFMap[word][i], 2);
-        }
+    var dotProduct = Array.from({ length: documentCount }, (_, i) => {
+        return Object.keys(TFIDF_).reduce((count, term) => {
+            return count + ((TFIDF_[term][i] || 0) * TFIDF_[term]["q"]);
+        }, 0);
+    });
 
-        magnitudeMap[i] = magnitude;
-    }
-    // Get magnitude for Query
+    // Calculate Magnitude
+    // var magnitudeMap = {};
+    // for (i = 0; i < documentCount; i++) {
+    //     magnitude = 0;
+    //     for (term in TFIDF_) {
+    //         magnitude += Math.pow(TFIDF_[term][i], 2);
+    //     }
+
+    //     magnitudeMap[i] = magnitude;
+    // }
+
+    var magnitudeMap = Array.from({ length: documentCount }, (_, i) => {
+        return Object.keys(TFIDF_).reduce((magnitude, term) => {
+            return magnitude + Math.pow(TFIDF_[term][i] || 0, 2);
+        }, 0);
+    });
+
+    // calculate Query Magnitude
     magnitude = 0;
-    for (word in TFIDFMap) {
-        magnitude = +Math.pow(TFIDFMap[word]["q"], 2);
+    for (term in TFIDF_) {
+        magnitude = +Math.pow(TFIDF_[term]["q"], 2);
     }
     magnitudeMap["q"] = magnitude;
 
-    // Get Similarity Map
-    var similarityMap = [];
-    for (i = 0; i < documentCount; i++) {
-        similarityMap[i] = [i, 0];
-        if (dotProductMap[i] > 0)
-            similarityMap[i] = [
-                i,
-                dotProductMap[i] /
-                    Math.sqrt(magnitudeMap[i] * magnitudeMap["q"]),
-            ];
-    }
+    // calculate Similarity Map
+    // var similarityMap = [];
+    // for (i = 0; i < documentCount; i++) {
+    //     similarityMap[i] = [i, 0];
+    //     if (dotProduct[i] > 0)
+    //         similarityMap[i] = [
+    //             i,
+    //             dotProduct[i] /
+    //                 Math.sqrt(magnitudeMap[i] * magnitudeMap["q"]),
+    //         ];
+    // }
+
+    var similarityMap = Array.from({ length: documentCount }, (_, i) => {
+        return dotProduct[i] > 0 
+            ? [i, dotProduct[i] / Math.sqrt(magnitudeMap[i] * magnitudeMap["q"])]
+            : [i, 0];
+    });
 
     // Remove documents with cosine similarity score of 0
     similarityMap = similarityMap.filter((document) => document[1] > 0);
 
     // Sort documents by their cosine similarity score
-    similarityMap.sort((a, b) => b[1] - a[1]);
-    // console.log(similarityMap);
-    // console.log(typeof(similarityMap))
+similarityMap.sort((doc_id, score) => score[1] - doc_id[1]);
     return similarityMap;
 };
 
 module.exports = GetMatch;
-// exports.getMatchedDocs = function () {
-//     doc_list = GetMatch();
-//     return doc_list;
-// };
