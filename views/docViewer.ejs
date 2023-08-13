@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search</title>
+    <link rel="stylesheet" href="/Common.css">
+    <link rel="stylesheet" href="/results_page.css">
+
+</head>
+
+<body>
+    <!-- <div class="logo">
+        <img src="/resources/logo.png" alt="">
+    </div>
+
+    <form action="/result" method="post">
+        <input type="text" name="search_bar" id="search_bar" placeholder="አዚህ ይጻፉ..." required>
+        <button class="searchBtn">ፈልግ</button>
+    </form> -->
+
+    <nav class="navBar">
+        <div class="logo">
+            <a href="http://localhost:3000/search">
+                <img src="/resources/logo.png" alt="logo">
+            </a>
+        </div>
+        <div class="searchForm">
+            <form action="/result" method="post">
+                <input type="text" name="query" id="query" placeholder="አዚህ ይጻፉ..." required>
+                <button class="searchBtn" type="submit">
+                    <img src="/resources/search_icon.png" alt="">
+                </button>
+            </form>
+        </div>
+    </nav>
+
+    <div class="results">
+        <p id="doc_id" hidden></p>
+
+        <div class="docDisplay">
+            <h2 id="doc_title">
+                <%= document.title%>
+            </h2>
+            <p class="doc_publisher">
+                <%= document.publisher %>
+            </p>
+            <p class="doc_content">
+                <%= document.content %>
+            </p>
+            <p class="doc_author">
+                አዘጋጅ - <%= document.author %>
+            </p>
+            <p class="doc_date">
+                ቀን - <%= document.date %>
+            </p>
+        </div>
+
+
+    </div>
+
+    <script>
+        function openDoc(docId) {
+            console.log("here")
+        }
+    </script>
+</body>
+
+</html>
