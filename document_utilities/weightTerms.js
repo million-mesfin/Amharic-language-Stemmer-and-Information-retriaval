@@ -9,7 +9,7 @@ const allTerms = processingDoc.flatMap((doc) => doc.index);
 var uniqueTerms = new Set(allTerms);
 
 // TF normalized by length
-var termFrequency = {};     // Hold terms with IDF and TFIDF
+var termFrequency = {}; // Hold terms with IDF and TFIDF
 uniqueTerms.forEach((term) => {
     //create term property
     termFrequency[term] = {};
@@ -43,7 +43,7 @@ Object.keys(termFrequency).forEach((term) => {
 });
 
 fs.writeFile(
-"./doc_files/term_TFIDF.json",
+    "./doc_files/term_TFIDF.json",
     JSON.stringify(termFrequency, null, 2),
     "utf8",
     (err) => {
@@ -51,6 +51,6 @@ fs.writeFile(
             console.error(err);
             return;
         }
-console.log("Term TF-IDF calculated and saved to term_TFIDF.json");
+        console.log("TF-IDF calculated and saved to term_TFIDF.json");
     }
 );
