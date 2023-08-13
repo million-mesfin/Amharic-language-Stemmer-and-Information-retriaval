@@ -1,0 +1,45 @@
+body {
+    background: url("./resources/background_new.png");
+    height: fit-content;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover; 
+    background-attachment: fixed;
+}
+.logo{
+    /* border: solid 1px red; */
+    width: fit-content;
+    margin: auto;
+    height: 200px;
+    margin-top: 90px;
+}
+
+form{
+    /* border: solid 1px red; */
+    width: 45%;
+    margin: 60px auto;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+}
+
+form input{
+    height: 100%;
+    width: 80%;
+    padding: 0 50px;
+    border: solid 1px rgb(182, 182, 182);
+}
+
+form button{
+    height: 100%;
+    width: 15%;
+    border: none;
+    color: white;
+    background-color: black;
+    cursor: pointer;
+}
+
+form input, form button{
+    border-radius: 40px;
+    font-size: 1.2em;
+}
