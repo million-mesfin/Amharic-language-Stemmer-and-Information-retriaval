@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search</title>
+    <link rel="stylesheet" href="/Common.css">
+    <link rel="stylesheet" href="/results_page.css">
+
+</head>
+
+<body>
+    <!-- <div class="logo">
+        <img src="/resources/logo.png" alt="">
+    </div>
+
+    <form action="/result" method="post">
+        <input type="text" name="search_bar" id="search_bar" placeholder="አዚህ ይጻፉ..." required>
+        <button class="searchBtn">ፈልግ</button>
+    </form> -->
+
+    <nav class="navBar">
+        <div class="logo">
+            <a href="http://localhost:3000/search">
+                <img src="/resources/logo.png" alt="logo">
+            </a>
+        </div>
+        <div class="searchForm">
+            <form action="/result" method="post">
+                <input type="text" name="query" id="query" placeholder="አዚህ ይጻፉ..." required>
+                <button class="searchBtn" type="submit">
+                    <img src="/resources/search_icon.png" alt="">
+                </button>
+            </form>
+        </div>
+    </nav>
+
+    <div class="results">
+        <p id="doc_id" hidden></p>
+        <div class="docCount">
+            <%= documents.length%> ምላሽ ተገኝቷል
+        </div>
+        <!-- <div class="docPreview">
+            <p class="title">ኢትዮጵያና ፓኪስታን በጤናው ዘርፍ በጋራ ለመሥራት የሚያስችላቸውን ውይይት አካሄዱ</p>
+            <p class="docSnippet">
+                ኢትዮጵያና ፓኪስታን በጤናው ዘርፍ በትብብር የሚሰሯቸውን ሰራዎችን ለማጠናከር የሚያግዝ ውይይት ማካሄዳቸው ተገለጸ። የሀገራቱ ወይይት ትኩረቱ በጤናው ዘርፍ በተለይም
+                በአካዳሚክ እና በምርምር ሰራዎችን ላይ የሚደረግ ትብብርን ማጠናከር ላይ ያለመ ነው መሆኑን በፓኪስታን የኢትዮጵያ ኤንባሲ አስታውቋል...
+            </p>
+            <hr>
+        </div> -->
+        <% for(let doc of documents) { %>
+
+            <div class="docPreview">
+                <a class="title" href="/openDoc?value=<%= doc.doc_id%>">
+                    <%= doc.title %>
+                </a>
+                <p class="docSnippet">
+                    <%= doc.content.split(" ").slice(0, 30).join(" ") + " ..."%>
+                </p>
+                <hr>
+            </div>
+
+
+            <%} %>
+
+
+    </div>
+
+    <script>
+        function openDoc(docId) {
+            console.log("here")
+        }
+    </script>
+</body>
+
+</html>
