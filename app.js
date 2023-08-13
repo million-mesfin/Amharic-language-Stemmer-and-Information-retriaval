@@ -61,6 +61,13 @@ app.get("/query", (req, res) => {
     weighting.queryVector("ኢትዮጵያ እና ፓኪስታን");
 });
 
+//---------------------Find test-------------------------------------
+
+app.get("/find", (req, res) => {
+    res.render("read", { title: "Read" });
+const find = require("./find");
+});
+
 //------------------Admin Panel Controls----------------------------------------
 
 app.get("/admin", (req, res) => {
