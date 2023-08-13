@@ -3,6 +3,7 @@ const fs = require("fs");
 const processor = require("../stopWordRemover").getProcessedQuery;
 
 const getQueryVector = (query) => {
+    console.log(query);
     // Process query
     query = processor(query);
     // Get unique words
@@ -37,9 +38,8 @@ const getQueryVector = (query) => {
             }, 0) / len;
     });
     */
-
-    // Write query word map
-    fs.writeFile(
+    // Save to query_TF.json
+    fs.writeFileSync(
         "./doc_files/query_TF.json",
         JSON.stringify(query_weight, null, 2),
         "utf8",
