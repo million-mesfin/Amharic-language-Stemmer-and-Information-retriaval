@@ -13,7 +13,7 @@ const docSnippet = scannedDocs.map(
         doc_id,
         title,
         publisher,
-        snippet: content.split("።").slice(0, 2).join("።") + "...",
+    snippet: content.split(" ").slice(0, 30).join(" ") + "...",
         author,
         date,
     })

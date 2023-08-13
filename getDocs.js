@@ -80,7 +80,8 @@ const GetMatch = () => {
 
     // Sort documents by their cosine similarity score
     similarityMap.sort((a, b) => b[1] - a[1]);
-    console.log(similarityMap);
+    // console.log(similarityMap);
+    // console.log(typeof(similarityMap))
     return similarityMap;
 };
 

@@ -9,7 +9,7 @@ const app = express();
 // Register view engine
 app.set("view engine", "ejs");
 
-var urlencodedParser = bodyParser.urlencoded({ extended: false });
+const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 // Listen at port 3000
 app.listen(3000);
@@ -45,7 +45,7 @@ app.get("/read", (req, res) => {
     const corpusDivider = require("./document_utilities/processDocs");
 });
 
-//---------------------Calculate term weight-------------------------------------
+//---------------------Calculate term weight test-------------------------------------
 
 app.get("/weight", (req, res) => {
     res.render("read", { title: "Read" });
@@ -61,14 +61,83 @@ app.get("/query", (req, res) => {
     weighting.queryVector("ኢትዮጵያ እና ፓኪስታን");
 });
 
-//---------------------Find test-------------------------------------
+//---------------------Find matching documents-------------------------------------
 
 app.get("/find", (req, res) => {
     res.render("read", { title: "Read" });
-const find = require("./find");
+    const find = require("./search");
 });
 
-//------------------Admin Panel Controls----------------------------------------
+//---------------------Landing page-------------------------------------
+
+app.get("/search", (req, res) => {
+    res.render("search", { title: "search" });
+});
+
+//---------------------Results page-------------------------------------
+
+app.post("/result", urlencodedParser, (req, res) => {
+    // Get query from the body
+    const query = req.body.query;
+    const processor = require("./search").search_documents(query);
+
+    processor.then(() => {
+        fs.readFile("doc_files/matchedDocuments.json", "utf8", (err, data) => {
+            if (err) {
+                console.error(err);
+                res.status(500).send(
+                    "An error occurred while reading the file."
+                );
+                return;
+            }
+
+            let documentsList;
+            try {
+                documentsList = JSON.parse(data);
+            } catch (err) {
+                console.error(err);
+                res.status(500).send(
+                    "An error occurred while parsing the JSON data."
+                );
+                return;
+            }
+
+            res.render("results", { documents: documentsList });
+        });
+    });
+
+    // res.render("results", { title: "results" });
+});
+
+//------------------Open Document-------------------------------------
+
+app.get("/openDoc", urlencodedParser, (req, res) => {
+    // console.log(value);
+    const docID = req.query.value;
+
+    fs.readFile("doc_files/scannedDocs.json", "utf8", (err, data) => {
+        if (err) {
+            console.error(err);
+            res.status(500).send("An error occurred while reading the file.");
+            return;
+        }
+
+        let documentsList;
+        try {
+            documentsList = JSON.parse(data);
+        } catch (err) {
+            console.error(err);
+            res.status(500).send(
+                "An error occurred while parsing the JSON data."
+            );
+            return;
+        }
+
+        res.render("docViewer", { document: documentsList[docID] });
+    });
+});
+
+//------------------Admin Panel Controls------------------------------
 
 app.get("/admin", (req, res) => {
     res.render("admin", { title: "Admin" });

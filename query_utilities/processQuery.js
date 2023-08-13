@@ -3,7 +3,6 @@ const fs = require("fs");
 const processor = require("../stopWordRemover").getProcessedQuery;
 
 const getQueryVector = (query) => {
-    console.log(query);
     // Process query
     query = processor(query);
     // Get unique words
