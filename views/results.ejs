@@ -37,7 +37,6 @@
     </nav>
 
     <div class="results">
-        <p id="doc_id" hidden></p>
         <div class="docCount">
             <%= documents.length%> ምላሽ ተገኝቷል
         </div>
@@ -49,27 +48,30 @@
             </p>
             <hr>
         </div> -->
-        <% for(let doc of documents) { %>
+        <% if(documents.length==0){ %>
+            <h1 class="noDoc">ምንም ምላሽ አልተገኘም... ደግመው ይሞክሩ</h1>
+            <% } else{ %>
+                    <% for(let doc of documents) { %>
 
-            <div class="docPreview">
-                <a class="title" href="/openDoc?value=<%= doc.doc_id%>">
-                    <%= doc.title %>
-                </a>
-                <p class="docSnippet">
-                    <%= doc.content.split(" ").slice(0, 30).join(" ") + " ..."%>
-                </p>
-                <hr>
-            </div>
+                        <div class="docPreview">
+                            <a class="title" href="/openDoc?value=<%= doc.doc_id%>">
+                                <%= doc.title %>
+                            </a>
+                            <p class="docSnippet">
+                                <%= doc.content.split(" ").slice(0, 30).join(" ") + " ..."%>
+                            </p>
+                            <hr>
+                        </div>
 
 
-            <%} %>
-
+                        <%} %>
+                            <% } %>
 
     </div>
 
     <script>
-        function openDoc(docId) {
-            console.log("here")
+        if (documents.length == null) {
+            <h1>ምንም ምላሽ አልተገኘም... ደግመው ይሞክሩ</h1>
         }
     </script>
 </body>
