@@ -109,6 +109,7 @@ const GetMatch = () => {
 
     // Sort documents by their cosine similarity score
 similarityMap.sort((doc_id, score) => score[1] - doc_id[1]);
+console.log(similarityMap)
     return similarityMap;
 };
 

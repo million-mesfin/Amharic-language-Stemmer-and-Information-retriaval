@@ -20,8 +20,8 @@ stop_word_list = [
     "ነበሯት",
     "ነበሩት",
     "ሌላ",
-"ሌሎችም",
-"ሌሎች",
+    "ሌሎችም",
+    "ሌሎች",
     "ኧክል",
     "ሦስት",
     "ቤት",
@@ -194,7 +194,7 @@ stop_word_list = [
     "ወቅት",
     "ኋላ",
     "ላይ",
-"በላይ",
+    "በላይ",
     "ረድቷል",
     "ጠፍቷል",
     "ተጨማሪ",
@@ -280,6 +280,8 @@ const firstWordsofMultiWords = [
     "ኣፈ",
     "ህገ",
 ];
+
+// Assign global flag ("g") to remove all occurences of the pattern
 const specialCharacters = new RegExp("[“…=,.+/<>’—”–!?()|:፡።‹›፣፤-]", "g");
 const consequetiveSpaces = new RegExp("\\s+", "g");
 const englishWords = new RegExp("[a-zA-Z]+", "g");
