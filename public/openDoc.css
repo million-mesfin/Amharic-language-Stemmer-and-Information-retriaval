@@ -1,0 +1,34 @@
+.docDisplay {
+    width: 70%;
+    margin: auto;
+}
+
+.doc_title,
+.doc_publisher,
+.doc_content {
+    font-family: "Courier New", Courier, monospace;
+    line-height: 2em;
+}
+.doc_title {
+    margin-bottom: 0.8em;
+    color: rgb(0, 90, 187);
+}
+hr {
+    margin-bottom: 0.8em;
+    border: 0.2px solid rgb(221, 221, 221);
+}
+
+.doc_publisher {
+    color: rgb(113, 113, 113);
+    font-size: 0.8em;
+}
+
+.doc_author {
+    margin-top: 10px;
+}
+
+.doc_author,
+.doc_date {
+    color: rgb(113, 113, 113);
+    font-size: 0.8em;
+}
