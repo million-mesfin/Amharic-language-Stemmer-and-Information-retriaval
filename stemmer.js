@@ -398,7 +398,8 @@ const Prefix = [
     "ዕን",
     "ብኧ",
     "ዐል",
-    "ይ", //gudayu
+    "ይኧ",
+    "ይ",
 ];
 
 const non_stemmedWords = [
@@ -477,17 +478,77 @@ exports.stem = function (word) {
     if (non_stemmedWords.includes(word)) {
         return word;
     } else {
+        // Prefix removal
         for (fix of Prefix) {
             if (getAmharicWord(stemmedWord).length > 2)
-                if (stemmedWord.startsWith(fix))
+                if (stemmedWord.startsWith(fix)) {
                     stemmedWord = stemmedWord.replace(fix, "");
+                }
         }
-
+        // Suffix removal
         for (fix of Suffix) {
             if (getAmharicWord(stemmedWord).length > 2)
                 if (stemmedWord.endsWith(fix))
                     stemmedWord = stemmedWord.replace(fix, "");
         }
-        return getAmharicWord(stemmedWord);
+
+        // Infix removal
+
+        /*
+            console.log(check);
+            if (check != true) {
+                console.log("here 2");
+                firstPart = stemmedWord.slice(0, 4);
+                firstPart = firstPart.slice(0, firstPart.length - 2);
+
+                var secondPart = stemmedWord.slice(firstPart.length);
+
+                console.log(firstPart, secondPart);
+
+                stemmedWord = firstPart + secondPart;
+            }
+            */
     }
+
+    // Infix removal for words with repeated patterns
+    stemmedWord = getAmharicWord(stemmedWord);
+    if (stemmedWord.length > 3 && stemmedWord.length % 2 == 0) {
+        let midIndex = stemmedWord.length / 2;
+        let firstHalf = stemmedWord.slice(0, midIndex);
+        let secondHalf = stemmedWord.slice(midIndex);
+
+        if (firstHalf == secondHalf) {
+            return stemmedWord;
+        } else if (
+            firstHalf.slice(0, firstHalf.length - 1) ===
+            secondHalf.slice(0, secondHalf.length - 1)
+        ) {
+            stemmedWord = secondHalf;
+        }
+
+        return stemmedWord;
+    }
+    stemmedWord = getPhoneticRepresentation(stemmedWord);
+    if (stemmedWord.length > 4) {
+        var firstPart = "";
+        var secondPart = "";
+        // var i = 0;
+        for (i = 0; i + 3 < stemmedWord.length; i++) {
+            var temp = stemmedWord.slice(i, i + 3);
+            const check = vowels.some((r) => temp.includes(r));
+            if (!check) {
+                if (i == 0) firstPart = stemmedWord.slice(0, i + 2);
+                else firstPart = stemmedWord.slice(0, i + 1);
+
+                secondPart = stemmedWord.slice(firstPart.length);
+                stemmedWord = firstPart + secondPart.slice(2);
+                break;
+            }
+        }
+
+        stemmedWord = getAmharicWord(stemmedWord);
+        return stemmedWord;
+    }
+
+    return stemmedWord;
 };
