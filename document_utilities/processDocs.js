@@ -13,7 +13,7 @@ const docSnippet = scannedDocs.map(
         doc_id,
         title,
         publisher,
-    snippet: content.split(" ").slice(0, 30).join(" ") + "...",
+        snippet: content.split(" ").slice(0, 30).join(" ") + "...",
         author,
         date,
     })
@@ -33,10 +33,10 @@ processingDoc = processingDoc.map((doc) => {
         ...doc,
         index: stopWordRemover.getProcessedCorpus(doc.index),
     };
-});
+}); 
 
 // Write Display Corpus
-fs.writeFile(
+fs.writeFileSync(
     path.join(__dirname, "../doc_files/docSnippet.json"),
     JSON.stringify(docSnippet),
     "utf8",
@@ -45,12 +45,12 @@ fs.writeFile(
             console.error(err);
             return;
         }
-    console.log("Display snippet created and saved as docSnippet.json");
+        console.log("Display snippet created and saved as docSnippet.json");
     }
 );
 
 // Write Functional Corpus
-fs.writeFile(
+fs.writeFileSync(
     path.join(__dirname, "../doc_files/processingDoc.json"),
     JSON.stringify(processingDoc),
     "utf8",
@@ -59,6 +59,8 @@ fs.writeFile(
             console.error(err);
             return;
         }
-console.log("Processing document created and saved as processingDoc.json");
+        console.log(
+            "Processing document created and saved as processingDoc.json"
+        );
     }
 );

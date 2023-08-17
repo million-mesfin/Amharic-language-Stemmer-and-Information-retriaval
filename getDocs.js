@@ -32,12 +32,13 @@ const GetMatch = () => {
         // } else TFIDF_[queryTerm] = { q: 0 };
 
         /**
-         * checks if TFIDF_[queryTerm] exists. If it does, it updates the q property of TFIDF_[queryTerm] with the product of query[queryTerm]["q"] and term_list[queryTerm]["IDF"]. If TFIDF_[queryTerm] does not exist, it sets TFIDF_[queryTerm] to { q: 0 }.
+         * check if TFIDF_[queryTerm] exists. If it does, it updates the q property of TFIDF_[queryTerm] with the product of query[queryTerm]["q"] and term_list[queryTerm]["IDF"]. If TFIDF_[queryTerm] does not exist, it sets TFIDF_[queryTerm] to { q: 0 }.
          */
         TFIDF_[queryTerm] = TFIDF_[queryTerm]
             ? {
                   ...TFIDF_[queryTerm],
-                  q: query[queryTerm]["q"] * term_list[queryTerm]["IDF"],
+                  q:
+                      (query[queryTerm]["q"] * term_list[queryTerm]["IDF"]),
               }
             : { q: 0 };
     }
@@ -58,7 +59,7 @@ const GetMatch = () => {
 
     var dotProduct = Array.from({ length: documentCount }, (_, i) => {
         return Object.keys(TFIDF_).reduce((count, term) => {
-            return count + ((TFIDF_[term][i] || 0) * TFIDF_[term]["q"]);
+            return count + (TFIDF_[term][i] || 0) * TFIDF_[term]["q"];
         }, 0);
     });
 
@@ -99,8 +100,12 @@ const GetMatch = () => {
     // }
 
     var similarityMap = Array.from({ length: documentCount }, (_, i) => {
-        return dotProduct[i] > 0 
-            ? [i, dotProduct[i] / Math.sqrt(magnitudeMap[i] * magnitudeMap["q"])]
+        return dotProduct[i] > 0
+            ? [
+                  i,
+                  dotProduct[i] /
+                      Math.sqrt(magnitudeMap[i] * magnitudeMap["q"]),
+              ]
             : [i, 0];
     });
 
@@ -108,8 +113,8 @@ const GetMatch = () => {
     similarityMap = similarityMap.filter((document) => document[1] > 0);
 
     // Sort documents by their cosine similarity score
-similarityMap.sort((doc_id, score) => score[1] - doc_id[1]);
-console.log(similarityMap)
+    similarityMap.sort((doc_id, score) => score[1] - doc_id[1]);
+    console.log(similarityMap);
     return similarityMap;
 };
 

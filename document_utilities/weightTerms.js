@@ -32,7 +32,7 @@ Object.keys(termFrequency).forEach((term) => {
         if (termFrequency[term][i] > 0) count++;
     });
     termFrequency[term]["dk"] = count;
-    termFrequency[term]["IDF"] = Math.log2(
+    termFrequency[term]["IDF"] = Math.log(
         documentCount / termFrequency[term]["dk"]
     );
 

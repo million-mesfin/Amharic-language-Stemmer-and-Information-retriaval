@@ -129,11 +129,9 @@ app.post("/result", urlencodedParser, (req, res) => {
                 return;
             }
 
-            res.render("results", { documents: documentsList });
+            res.render("results", { documents: documentsList, query: query });
         });
     });
-
-    // res.render("results", { title: "results" });
 });
 
 //------------------Open Document-------------------------------------
