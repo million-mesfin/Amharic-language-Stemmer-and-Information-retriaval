@@ -512,43 +512,84 @@ exports.stem = function (word) {
 
     // Infix removal for words with repeated patterns
     stemmedWord = getAmharicWord(stemmedWord);
-    if (stemmedWord.length > 3 && stemmedWord.length % 2 == 0) {
+    if (stemmedWord.length > 3/* && stemmedWord.length % 2 == 0*/) {
         let midIndex = stemmedWord.length / 2;
         let firstHalf = stemmedWord.slice(0, midIndex);
         let secondHalf = stemmedWord.slice(midIndex);
 
-        if (firstHalf == secondHalf) {
+        if (firstHalf == secondHalf && stemmedWord.length % 2 == 0) {
             return stemmedWord;
         } else if (
             firstHalf.slice(0, firstHalf.length - 1) ===
-            secondHalf.slice(0, secondHalf.length - 1)
+                secondHalf.slice(0, secondHalf.length - 1) &&
+            stemmedWord.length % 2 == 0
         ) {
             stemmedWord = secondHalf;
-        }
+        } else {
+            stemmedWord = getPhoneticRepresentation(stemmedWord);
+            if (stemmedWord.length > 4) {
+                var fullfilled = false;
+                var j = 0;
+                var index = 0;
 
-        return stemmedWord;
-    }
-    stemmedWord = getPhoneticRepresentation(stemmedWord);
-    if (stemmedWord.length > 4) {
-        var firstPart = "";
-        var secondPart = "";
-        // var i = 0;
-        for (i = 0; i + 3 < stemmedWord.length; i++) {
-            var temp = stemmedWord.slice(i, i + 3);
-            const check = vowels.some((r) => temp.includes(r));
-            if (!check) {
-                if (i == 0) firstPart = stemmedWord.slice(0, i + 2);
-                else firstPart = stemmedWord.slice(0, i + 1);
+                for (i = 1; i < stemmedWord.length; i++) {
+                    var temp = stemmedWord.slice(j, i);
 
-                secondPart = stemmedWord.slice(firstPart.length);
-                stemmedWord = firstPart + secondPart.slice(2);
-                break;
+                    const check = vowels.some((r) => temp.includes(r));
+                    if (check && temp.length < 4) {
+                        j = i;
+                        continue;
+                    } else if (!check && temp.length == 3) {
+                        if (
+                            !vowels.includes(stemmedWord[i]) &&
+                            !vowels.includes(stemmedWord[i + 1])
+                        ) {
+                            i = i + 1;
+                            index = i;
+                            fullfilled = true;
+                        } else {
+                            index = i;
+                            fullfilled = true;
+                        }
+                        break;
+                    }
+
+                }
+
+                if (fullfilled) {
+                    var first_part = stemmedWord.slice(0, i - 2);
+                    var second_part = stemmedWord.slice(i);
+
+                    stemmedWord = first_part + second_part;
+                }
+
+                stemmedWord = getAmharicWord(stemmedWord);
+                // return stemmedWord;
             }
         }
 
-        stemmedWord = getAmharicWord(stemmedWord);
         return stemmedWord;
     }
+    // if (stemmedWord.length > 4) {
+    //     var firstPart = "";
+    //     var secondPart = "";
+    //     // var i = 0;
+    //     for (i = 0; i + 3 < stemmedWord.length; i++) {
+    //         var temp = stemmedWord.slice(i, i + 3);
+    //         const check = vowels.some((r) => temp.includes(r));
+    //         if (!check) {
+    //             if (i == 0) firstPart = stemmedWord.slice(0, i + 2);
+    //             else firstPart = stemmedWord.slice(0, i + 1);
+
+    //             secondPart = stemmedWord.slice(firstPart.length);
+    //             stemmedWord = firstPart + secondPart.slice(2);
+    //             break;
+    //         }
+    //     }
+
+    //     stemmedWord = getAmharicWord(stemmedWord);
+    //     return stemmedWord;
+    // }
 
     return stemmedWord;
 };
