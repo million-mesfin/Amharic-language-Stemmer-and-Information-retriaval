@@ -40,32 +40,24 @@
         <div class="docCount">
             <%= documents.length%> ምላሽ ተገኝቷል
         </div>
-        <!-- <div class="docPreview">
-            <p class="title">ኢትዮጵያና ፓኪስታን በጤናው ዘርፍ በጋራ ለመሥራት የሚያስችላቸውን ውይይት አካሄዱ</p>
-            <p class="docSnippet">
-                ኢትዮጵያና ፓኪስታን በጤናው ዘርፍ በትብብር የሚሰሯቸውን ሰራዎችን ለማጠናከር የሚያግዝ ውይይት ማካሄዳቸው ተገለጸ። የሀገራቱ ወይይት ትኩረቱ በጤናው ዘርፍ በተለይም
-                በአካዳሚክ እና በምርምር ሰራዎችን ላይ የሚደረግ ትብብርን ማጠናከር ላይ ያለመ ነው መሆኑን በፓኪስታን የኢትዮጵያ ኤንባሲ አስታውቋል...
-            </p>
-            <hr>
-        </div> -->
         <% if(documents.length==0){ %>
             <h1 class="noDoc">ምንም ምላሽ አልተገኘም... ደግመው ይሞክሩ</h1>
             <% } else{ %>
-                    <% for(let doc of documents) { %>
+                <% for(let doc of documents) { %>
 
-                        <div class="docPreview">
-                            <a class="title" href="/openDoc?value=<%= doc.doc_id%>">
-                                <%= doc.title %>
-                            </a>
-                            <p class="docSnippet">
-                                <%= doc.content.split(" ").slice(0, 30).join(" ") + " ..."%>
-                            </p>
-                            <hr>
-                        </div>
+                    <div class="docPreview">
+                        <a class="title" href="/openDoc?value=<%= doc.doc_id%>">
+                            <%= doc.title%>
+                        </a>
+                        <p class="docSnippet">
+                            <%= doc.content.split(" ").slice(0, 30).join(" ") + " ..."%>
+                        </p>
+                        <hr>
+                    </div>
 
 
-                        <%} %>
-                            <% } %>
+                    <%} %>
+                        <% } %>
 
     </div>
 
